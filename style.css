@@ -1,0 +1,153 @@
+
+body{
+    display: flex;
+   color: rgb(0, 0, 0);
+}
+.main-card
+{
+    /* display: flex; */
+    margin: 0 auto;
+    /* background-color: red; */
+    height: 500px;
+    width: 450px;
+    margin-top: 50px;
+    
+}
+.main-card .other-details
+{
+    margin-top: 20px;
+    box-shadow: 2px 2px 12px black;
+}
+.main-card .search-box{
+    display: flex;
+    justify-content: space-evenly;
+}
+.main-card .search-box input[type=text]{
+    background: transparent;
+    width: 360px;
+    height: 20px;
+    /* width: 90%; */
+
+}
+.main-card .search-box input[type=text]:hover{
+    box-shadow: 0px 0px 15px rgb(163, 196, 244);
+    /* border: 2px solid white; */
+    border-color: aliceblue;
+}
+
+.main-card .search-box button{
+    height: 25px;
+    width: 70px;
+    /* color: red; */
+}
+.main-card .search-box button:hover
+{
+    /* background-color: red; */
+    box-shadow: 1px 2px 10px rgb(0, 0, 0);
+}
+.main-card .other-details{
+    padding: 10px;
+    /* background-color: aqua; */
+    background-image: url(photo/deault.gif);
+    background-size: cover;
+    height: 100%;
+}
+.main-card .other-details .image
+{
+    /* margin-top: 20px; */
+    margin-right: 20px;
+    /* padding: 10px; */
+    /* background-color: rgb(47, 93, 91); */
+    border: 2px solid rgb(255, 255, 255);
+    /* background-image: url(sunny.jpg); */
+    background: transparent;
+    height: 45%;
+    width: 95%;
+    padding-left: 10px;
+    padding-right: 10px;
+    /* padding-top: 10px; */
+}
+.main-card .other-details .image h1
+{
+    padding-left: 10px;
+    padding-top: 0px;
+
+}
+.main-card .other-details .image h5 #city
+{
+    
+    font-size: 25px;
+}
+.main-card .other-details .image .weather
+{
+    text-align: center;
+    line-height: 5px;
+
+}
+.main-card .other-details .image .temp
+{
+    text-align: center;
+    line-height: 15px;
+    display: flex;
+    /* padding-top: 1px; */
+    /* align-items: center; */
+    justify-self: center;
+    font-size: 50px;
+
+}
+.main-card .other-details .image .temp .deg
+{
+    font-size:25px ;
+}
+.main-card .other-details .image .feel_temp
+{
+    display: flex;
+    text-align: center;
+    justify-self: center;
+    line-height:5px ;
+}
+.main-card .other-details .image .sun_rise{
+    display: flex;
+    justify-content: space-between;
+    padding-bottom: 5px;
+}
+.main-card .other-details .details .max_min_temp{
+
+    display: flex;
+}
+/* .main-card .other-details .details .max_min_temp .Max span */
+.main-card .other-details .details .pressure_humidity
+{
+    display: flex;
+}
+.main-card .other-details .details .other
+{
+    display: flex;
+    justify-content: space-around;
+}
+.main-card .other-details .details .other div{
+    height: 100px;
+    width: 100px;
+    /* border: 2px solid red; */
+    margin-right: 5px;
+    display: none;
+    text-align: center;
+}
+.main-card .other-details .details .pressure_humadity_wind
+{
+    display: flex;
+    justify-content: space-around;
+}
+.main-card .other-details .details .pressure_humadity_wind div{
+    padding-top: 5px;
+    height: 100px;
+    width: 100px;
+    text-align: center;
+    /* border: 2px solid red; */
+    box-shadow: 0px 0px 12px rgb(255, 255, 255);
+}
+.main-card .other-details .details .pressure_humadity_wind div img
+{
+    height: 20px;
+    width: 20px;
+}

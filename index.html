@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weather Application</title>
+    <link rel="icon" href="photo/deault.gif" type="image/icon type">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="main-card">
+        <div class="search-box">
+            <form action="" target="" >
+                <input type="text" name="q" id="search">
+                <button type="submit">submit</button>
+            </form>
+        </div>
+        <div class="other-details">
+            <div class="image">
+                <h5><span id="city">__?</span>,<spap id="country"></spap></h5>
+                <h1 class="weather"></h1>
+                <h1 class="temp"><span></span><sup class="deg">&#8451;</sup></h1>
+                <h5 class="feel_temp">Feel Like: <span></span><sup class="deg">&#8451;</sup></h5>
+                <div class="sun_rise"><p class="sunRise">Sun Rise: <span></span></p><p class="sunset">SunSet:<span></span></p></div>
+            </div>
+            <div class="details">
+                <div class="max_min_temp"><p class="Max">Max Temp: <span></span><sup class="deg">&#8451;</sup></p> 	&nbsp;	&nbsp;<p class="Min">Min Temp: <span></span><sup class="deg">&#8451;</sup></p></div>
+                <div class="pressure_humadity_wind">
+                    <div class="Pressure">
+                        <img src="photo/pressure.png" alt="">
+                        <p class="pressure">Pressure <br> <span class="data"></span></p> 
+                    </div>
+                    <div class="Humidity">
+                        <img src="photo/humidity.png" alt="">
+                        <p class="humidity">Humidity <br><span class="data"></span></p>
+                    </div>
+                    <div class="Wind">
+                        <img src="photo/wind.png" alt="">
+                        <p class="windspeed">WindSpeed <br> <span></span></p>
+                    </div>
+                </div>
+                <!-- <div class="pressure_humidity">
+                    <p class="pressure">Pressure: <span class="data"></span></p> 
+                    	&nbsp;	&nbsp;
+                    <p class="humidity">Humidity:<span class="data"></span></p>
+                </div>
+            <div class="wind">
+                <p class="windspeed">WindSpeed: <span></span></p> 
+            </div>-->
+            <div class="other">
+                <div id="cloud">
+                    <h3>Cloud</h3>
+                    <p></p>
+                </div>
+                <div id="rain">
+                    <h3>Rain</h3>
+                    <p></p>
+
+                </div>
+                <div id="snow">
+                    <h3>Snow</h3>
+                    <p></p>
+                </div>
+            </div>
+            </div>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
