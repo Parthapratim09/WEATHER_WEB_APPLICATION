@@ -2,6 +2,7 @@
 body{
     display: flex;
    color: rgb(0, 0, 0);
+   background-color: #121212;
 }
 .main-card
 {
@@ -11,16 +12,17 @@ body{
     height: 500px;
     width: 450px;
     margin-top: 50px;
-    
 }
 .main-card .other-details
 {
     margin-top: 20px;
-    box-shadow: 2px 2px 12px black;
+    box-shadow: 2px 2px 12px rgb(255, 255, 255);
+    border: 2px solid rgb(255, 255, 255);
 }
 .main-card .search-box{
     display: flex;
     justify-content: space-evenly;
+    background-color: rgb(255, 255, 255);
 }
 .main-card .search-box input[type=text]{
     background: transparent;
