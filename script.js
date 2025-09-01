@@ -14,7 +14,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 Drizzle: 'https://images.unsplash.com/photo-1515694346937-94d85e41e682?q=80&w=1887&auto=format&fit=crop',
                 Thunderstorm: 'https://images.unsplash.com/photo-1605727226425-636c342a2b34?q=80&w=2070&auto=format&fit=crop',
                 Snow: 'https://images.unsplash.com/photo-1491002052546-bf38f186af56?q=80&w=2108&auto=format&fit=crop',
-              
+                
                 Mist: 'https://images.unsplash.com/photo-1482836260217-4a23555c3533?q=80&w=2070&auto=format&fit=crop',
                 Smoke: 'https://images.unsplash.com/photo-1482836260217-4a23555c3533?q=80&w=2070&auto=format&fit=crop',
                 Haze: 'https://images.unsplash.com/photo-1482836260217-4a23555c3533?q=80&w=2070&auto=format&fit=crop',
@@ -87,7 +87,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     weatherCard.classList.add('has-image-bg');
                     weatherCard.classList.remove('glass-card-main');
                 } else {
-                    // Fallback to transparent glass effect if no specific image is found
+                    
                     weatherCard.style.backgroundImage = 'none';
                     weatherCard.classList.remove('has-image-bg');
                     weatherCard.classList.add('glass-card-main');
@@ -110,5 +110,5 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
             });
 
-           fetchWeather(kolkata);
+            fetchWeather('Kolkata');
         });
