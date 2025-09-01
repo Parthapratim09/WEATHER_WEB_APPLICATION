@@ -109,6 +109,5 @@ document.addEventListener('DOMContentLoaded', () => {
                     fetchWeather(city);
                 }
             });
-
-            fetchWeather('Kolkata');
+            fetchWeather('kolkata');
         });
