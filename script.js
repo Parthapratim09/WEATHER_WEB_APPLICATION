@@ -110,5 +110,5 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
             });
 
-           fetchWeather('kolkata');
+           fetchWeather(kolkata);
         });
