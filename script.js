@@ -1,183 +1,114 @@
-let inp=document.querySelector('#search');
-let form=document.querySelector('form');
-let image=document.querySelector('.image');
-let city_name;
-let city=document.querySelector('.main-card .other-details .image h5 #city');
-// console.dir(city);
-let API_key='aa9311334122d5496432de1c79f1801e';
-form.addEventListener('submit',(event) =>
-    {
-        event.preventDefault();
-         city_name=inp.value;
-         let url=`https://api.openweathermap.org/data/2.5/weather?q=${city_name}&appid=${API_key}`;
-// console.log(url);
-fetch(url)
-.then(Response => {
-    return Response.json();
-})
-.then((data) =>{
-    console.dir(data);
-    // console.log(data.cod);
-    //Get SUnrise Time
-    let unixTimestampRise = data.sys.sunrise;
-    const Risedate = new Date(unixTimestampRise * 1000); // Convert to milliseconds
+document.addEventListener('DOMContentLoaded', () => {
+            const API_KEY = 'aa9311334122d5496432de1c79f1801e';
+            const searchForm = document.getElementById('searchForm');
+            const searchInput = document.getElementById('searchInput');
+            const weatherCard = document.getElementById('weatherCard');
+            const messageDiv = document.getElementById('message');
+            const loaderDiv = document.getElementById('loader');
 
-  // Get hours in 12-hour format
-  let Risehours = Risedate.getHours();
-  const Riseampm = Risehours >= 12 ? 'PM' : 'AM';
-  Risehours = Risehours % 12;
-  Risehours = Risehours ? Risehours : 12; // Convert 0 to 12
+            const weatherImages = {
+                ClearDay: 'https://images.unsplash.com/photo-1558418294-9da1497573f4?q=80&w=1887&auto=format&fit=crop',
+                ClearNight: 'https://images.unsplash.com/photo-1475274047050-1d0c0975c63e?q=80&w=2072&auto=format&fit=crop',
+                Clouds: 'https://images.unsplash.com/photo-1499956827185-0d63ee78a910?q=80&w=1932&auto=format&fit=crop',
+                Rain: 'https://images.unsplash.com/photo-1515694346937-94d85e41e682?q=80&w=1887&auto=format&fit=crop',
+                Drizzle: 'https://images.unsplash.com/photo-1515694346937-94d85e41e682?q=80&w=1887&auto=format&fit=crop',
+                Thunderstorm: 'https://images.unsplash.com/photo-1605727226425-636c342a2b34?q=80&w=2070&auto=format&fit=crop',
+                Snow: 'https://images.unsplash.com/photo-1491002052546-bf38f186af56?q=80&w=2108&auto=format&fit=crop',
+              
+                Mist: 'https://images.unsplash.com/photo-1482836260217-4a23555c3533?q=80&w=2070&auto=format&fit=crop',
+                Smoke: 'https://images.unsplash.com/photo-1482836260217-4a23555c3533?q=80&w=2070&auto=format&fit=crop',
+                Haze: 'https://images.unsplash.com/photo-1482836260217-4a23555c3533?q=80&w=2070&auto=format&fit=crop',
+                Fog: 'https://images.unsplash.com/photo-1482836260217-4a23555c3533?q=80&w=2070&auto=format&fit=crop',
+                Dust: 'https://images.unsplash.com/photo-1482836260217-4a23555c3533?q=80&w=2070&auto=format&fit=crop',
+                Sand: 'https://images.unsplash.com/photo-1482836260217-4a23555c3533?q=80&w=2070&auto=format&fit=crop',
+                Ash: 'https://images.unsplash.com/photo-1482836260217-4a23555c3533?q=80&w=2070&auto=format&fit=crop',
+                Squall: 'https://images.unsplash.com/photo-1482836260217-4a23555c3533?q=80&w=2070&auto=format&fit=crop',
+                Tornado: 'https://images.unsplash.com/photo-1454789548928-9efd52dc4031?q=80&w=2080&auto=format&fit=crop'
+            };
 
-  // Get minutes and seconds
-  const Riseminutes = Risedate.getMinutes().toString().padStart(2, '0');
-  const Riseseconds = Risedate.getSeconds().toString().padStart(2, '0');
+            const fetchWeather = async (city) => {
+                showLoader();
+                hideMessage();
+                weatherCard.classList.add('hidden');
 
-  // Format the time string
-  const RisetimeString = `${Risehours}:${Riseminutes}:${Riseseconds} ${Riseampm}`;
-   document.querySelector('.main-card .other-details .image .sun_rise .sunRise span').innerText=RisetimeString;
-   //Get SUn Set time
-   let unixTimestampSet = data.sys.sunset;
-    const Setdate = new Date(unixTimestampSet * 1000); // Convert to milliseconds
+                const url = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${API_KEY}&units=metric`;
 
-  // Get hours in 12-hour format
-  let Sethours = Setdate.getHours();
-  const Setampm = Sethours >= 12 ? 'PM' : 'AM';
-  Sethours = Sethours % 12;
-  Sethours = Sethours ? Sethours : 12; // Convert 0 to 12
+                try {
+                    const response = await fetch(url);
+                    const data = await response.json();
 
-  // Get minutes and seconds
-  const Setminutes = Setdate.getMinutes().toString().padStart(2, '0');
-  const Setseconds = Setdate.getSeconds().toString().padStart(2, '0');
+                    if (data.cod !== 200) {
+                        throw new Error(data.message || 'City not found');
+                    }
+                    
+                    updateUI(data);
 
-  // Format the time string
-  const SettimeString = `${Sethours}:${Setminutes}:${Setseconds} ${Setampm}`;
-    document.querySelector('.main-card .other-details .image .sun_rise .sunset span').innerText=SettimeString;
+                } catch (error) {
+                    showMessage(`Error: ${error.message}`);
+                    console.error("Failed to fetch weather data:", error);
+                } finally {
+                    hideLoader();
+                }
+            };
 
-    if(data.cod!="200")
-    {
-      return alert("CITY NOT FOUND");
-    }
-    city.innerText=data.name;
-    if(data.weather[0].main=="Clouds")
-    {
-      document.querySelector('.main-card .other-details').style.backgroundImage = "url('photo/cloudy.jpg')";
-      document.querySelector('body').style.color="white";
-    }
-    else if(data.weather[0].main=="Rain")
-      {
-        document.querySelector('.main-card .other-details').style.backgroundImage = "url('photo/Rain.webp')";
-      document.querySelector('body').style.color="white";
+            const updateUI = (data) => {
+                
+                document.getElementById('cityName').textContent = `${data.name}, ${data.sys.country}`;
+                document.getElementById('weatherDesc').textContent = data.weather[0].description;
+                document.getElementById('weatherIcon').src = `https://openweathermap.org/img/wn/${data.weather[0].icon}@4x.png`;
+                document.getElementById('temperature').textContent = `${Math.round(data.main.temp)}°`;
+                document.getElementById('feelsLike').textContent = `${Math.round(data.main.feels_like)}°`;
+                document.getElementById('humidity').textContent = `${data.main.humidity}%`;
+                document.getElementById('windSpeed').textContent = `${data.wind.speed.toFixed(1)} m/s`;
+                document.getElementById('pressure').textContent = `${data.main.pressure} hPa`;
+                document.getElementById('maxTemp').textContent = `${Math.round(data.main.temp_max)}°`;
+                document.getElementById('minTemp').textContent = `${Math.round(data.main.temp_min)}°`;
+                document.getElementById('sunrise').textContent = new Date(data.sys.sunrise * 1000).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: true });
+                document.getElementById('sunset').textContent = new Date(data.sys.sunset * 1000).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: true });
 
-      }
-      else if(data.weather[0].main=="Thunderstorm")
-        {
-          document.querySelector('.main-card .other-details').style.backgroundImage = "url('photo/Thunder.webp')";
-      document.querySelector('body').style.color="white";
+                updateCardBackground(data.weather[0].main, data.sys.sunrise, data.sys.sunset);
+                
+                weatherCard.classList.remove('hidden');
+            };
 
-        }
-      else if(data.weather[0].main=="Clear")
-        {
-          const date = new Date();
-          let hours = date.getHours();
-          // let ampm = hours >= 12 ? 'PM' : 'AM';
-          // Convert to 12-hour format
-          hours = hours % 12;
-          hours = hours ? hours : 12; // the hour '0' should be '12'
-          console.log(hours)
-          if(hours>Sethours)
-          {
-            document.querySelector('.main-card .other-details').style.backgroundImage = "url('photo/nightsky.gif')";
-            document.querySelector('body').style.color="white";
-          }
-          else{
-          document.querySelector('.main-card .other-details').style.backgroundImage = "url('photo/clear_sky1.jpg')";
-          document.querySelector('body').style.color="black";
-          }
-        }
-        else if(data.weather[0].main=="Sunny")
-          {
-            const date = new Date();
-            let hours = date.getHours();
-          // let ampm = hours >= 12 ? 'PM' : 'AM';
-          // Convert to 12-hour format
-          hours = hours % 12;
-          hours = hours ? hours : 12; // the hour '0' should be '12'
-          if(hours>Sethours)
-          {
-            document.querySelector('.main-card .other-details').style.backgroundImage = "url('photo/night.gif')";
-            document.querySelector('body').style.color="white";
-          }
-          else{
-            document.querySelector('.main-card .other-details').style.backgroundImage = "url('photo/sunny.jpg')";
-            document.querySelector('body').style.color="black";
-          }
-          }
-      else if(data.weather[0].main=="Snow")
-        {
-          document.querySelector('.main-card .other-details').style.backgroundImage = "url('photo/snow.webp')";
-      document.querySelector('body').style.color="black";
+            const updateCardBackground = (weatherMain, sunrise, sunset) => {
+                const now = Date.now() / 1000;
+                const isDay = now > sunrise && now < sunset;
+                let imageKey = weatherMain;
+                
+                if (weatherMain === 'Clear') {
+                    imageKey = isDay ? 'ClearDay' : 'ClearNight';
+                }
 
-        }
+                const imageUrl = weatherImages[imageKey];
 
+                if (imageUrl) {
+                    weatherCard.style.backgroundImage = `url('${imageUrl}')`;
+                    weatherCard.classList.add('has-image-bg');
+                    weatherCard.classList.remove('glass-card-main');
+                } else {
+                    // Fallback to transparent glass effect if no specific image is found
+                    weatherCard.style.backgroundImage = 'none';
+                    weatherCard.classList.remove('has-image-bg');
+                    weatherCard.classList.add('glass-card-main');
+                }
+            };
+            
+            const showMessage = (msg) => {
+                messageDiv.textContent = msg;
+                messageDiv.classList.remove('hidden');
+            };
+            const hideMessage = () => messageDiv.classList.add('hidden');
+            const showLoader = () => loaderDiv.classList.remove('hidden');
+            const hideLoader = () => loaderDiv.classList.add('hidden');
 
+            searchForm.addEventListener('submit', (e) => {
+                e.preventDefault();
+                const city = searchInput.value.trim();
+                if (city) {
+                    fetchWeather(city);
+                }
+            });
 
-    document.querySelector('.main-card .other-details .image h5 #country').innerText=data.sys.country;
-    document.querySelector('.main-card .other-details .image .weather').innerText=data.weather[0].description;
-    document.querySelector('.main-card .other-details .image .temp span').innerText=Math.floor(data.main.temp-273.15);
-    document.querySelector('.main-card .other-details .image .feel_temp span').innerText=Math.floor(data.main.feels_like-273.15);
-    document.querySelector('.main-card .other-details .details .max_min_temp .Max span').innerText=Math.floor(data.main.temp_max-273.15);
-    document.querySelector('.main-card .other-details .details .max_min_temp .Min span').innerText=Math.floor(data.main.temp_min-273.15);
-    document.querySelector('.main-card .other-details .details .pressure_humadity_wind .Pressure .pressure span').innerText=`${data.main.pressure} hPa`;
-    document.querySelector('.main-card .other-details .details .pressure_humadity_wind .Humidity .humidity span').innerText=`${data.main.humidity}%`;
-    function getWindDirection(deg, speed) {
-      const windElement = document.querySelector('.main-card .other-details .details .pressure_humadity_wind .Wind .windspeed span');
-    
-      if (!windElement) {
-        console.error("Wind element not found");
-        return;
-      }
-    
-      const directions = [
-        "N", "N/NNE", "NNE", "NE", "E/NE", "E", "E/SE", "SE", "S/SE", "S", "S/SW", "SW", "W/SW", "W", "W/NW", "NW", "N/NW"
-      ];
-    
-      const index = Math.round(deg / 22.5) % 16;
-      windElement.innerText = `${speed}${directions[index]}`;
-    }
-    
-    // Example usage:
-    let deg = data.wind.deg;
-    let speed = data.wind.speed;
-    // console.log(deg);
-    getWindDirection(deg, speed);
-    
-    if(data.clouds)
-    {
-      document.querySelector('.main-card .other-details .details .other #cloud').style.display='block';
-      document.querySelector('.main-card .other-details .details .other #cloud p').innerText=`${data.clouds.all}%`
-    }
-    if(data.rain)
-      {
-        document.querySelector('.main-card .other-details .details .other #rain').style.display='block';
-        document.querySelector('.main-card .other-details .details .other #rain p').innerText=`${data.rain['1h']}mm/h`
-      }
-      if(data.snow)
-      {
-        document.querySelector('.main-card .other-details .details .other #snow').style.display='block';
-        document.querySelector('.main-card .other-details .details .other #snow p').innerText=`${data.snow['1h']}mm/h`
-      }
-
-
-
-
-
-
-
-
-    
-})
-// image.innerHTML=`<h1>${city_name}</h1>`;
-});
-
-// let val;
-
+           getUserLocation();
+        });
